@@ -3,11 +3,11 @@ export const PAIRS = [
     id: 1,
     nature: {
       label: "Aile de papillon",
-      image: "/images/cards/vivant/papillon.jpg",
+      image: "/images/cards/vivant/papillon.png",
     },
     application: {
       label: "Panneaux solaires",
-      image: "/images/cards/application/panneaux-solaires.jpg",
+      image: "/images/cards/application/Panneau solaire.jpeg",
     },
     explication: "Les écailles nanométriques de l'aile du papillon morpho régulent sa température en absorbant ou réfléchissant les rayons infrarouges. Ce mécanisme inspire des panneaux photovoltaïques capables d'éviter la surchauffe, améliorant ainsi leur rendement.",
     lien: "Régulation thermique par structure nanométrique",
@@ -19,11 +19,11 @@ export const PAIRS = [
     id: 2,
     nature: {
       label: "Cicatrice",
-      image: "/images/cards/vivant/Cicatrices.jpg",
+      image: "/images/cards/vivant/Cicatrice.png",
     },
     application: {
       label: "Béton autocicatrisant",
-      image: "/images/cards/application/beton.jpg",
+      image: "/images/cards/application/Béton cicatrisant.jpeg",
     },
     explication: "Comme la peau se répare après une blessure, le béton autocicatrisant contient des bactéries encapsulées qui, au contact de l'eau s'infiltrant dans une fissure, produisent du carbonate de calcium pour colmater la brèche automatiquement.",
     lien: "Auto-réparation autonome déclenchée par un stimulus",
@@ -39,7 +39,7 @@ export const PAIRS = [
     },
     application: {
       label: "Filets capteurs de rosée",
-      image: "/images/cards/application/filets.jpg",
+      image: "/images/cards/application/Filets capteur de rose.jpeg",
     },
     explication: "Le scarabée Stenocara collecte l'eau du brouillard matinal grâce à son dos aux surfaces alternées hydrophiles et hydrophobes. Des filets géants imitant ce principe captent la rosée dans les zones arides.",
     lien: "Collecte d'eau par alternance hydrophile / hydrophobe",
@@ -71,7 +71,7 @@ export const PAIRS = [
     },
     application: {
       label: "30 St Mary Axe",
-      image: "/images/cards/application/gherkin.jpg",
+      image: "/images/cards/application/30 st mary axe.jpeg",
     },
     explication: "Cette éponge de mer possède un squelette en treillis de fibres de verre disposées en diagonale — solidité remarquable. La tour londonienne The Gherkin reprend cette même morphologie spiralée.",
     lien: "Structure en treillis hélicoïdal pour une résistance maximale",
@@ -87,7 +87,7 @@ export const PAIRS = [
     },
     application: {
       label: "Surface hydrofuge",
-      image: "/images/cards/application/hydrofuge.jpg",
+      image: "/images/cards/application/hydrofuge.jpeg",
     },
     explication: "La feuille de lotus possède des micro-reliefs nanométriques qui empêchent les molécules d'eau d'adhérer à sa surface. L'eau perle et emporte les impuretés. Ce principe est appliqué aux façades et vitrages.",
     lien: "Super-hydrophobie par micro-relief de surface",
@@ -103,7 +103,7 @@ export const PAIRS = [
     },
     application: {
       label: "District 11",
-      image: "/images/cards/application/district11.jpg",
+      image: "/images/cards/application/District 11.jpeg",
     },
     explication: "Les manchots se serrent en groupes denses sur la banquise, économisant jusqu'à 5°C de chaleur collective. Le District 11 à Skolkovo regroupe ses villas en cercle sur ce même principe de mutualisation thermique.",
     lien: "Mutualisation thermique par regroupement circulaire dense",
@@ -119,7 +119,7 @@ export const PAIRS = [
     },
     application: {
       label: "Colle forte bio-inspirée",
-      image: "/images/cards/application/colle.jpg",
+      image: "/images/cards/application/Colle fort.jpeg",
     },
     explication: "Les moules sécrètent des protéines qui leur permettent de se fixer aux rochers, même sous l'eau. Des chercheurs ont reproduit ces protéines adhésives pour créer une colle capable de lier des enzymes sur des surfaces métalliques.",
     lien: "Adhésion universelle sous l'eau par protéines bio-inspirées",
@@ -135,7 +135,7 @@ export const PAIRS = [
     },
     application: {
       label: "Camouflage naval",
-      image: "/images/cards/application/camouflage.jpg",
+      image: "/images/cards/application/Camouflage.jpeg",
     },
     explication: "Les rayures du zèbre créent une illusion d'optique qui perturbe la perception du mouvement. En 1917, Norman Wilkinson a appliqué ce principe en couvrant des navires britanniques de motifs contrastés pour déjouer les sous-marins ennemis.",
     lien: "Illusion d'optique par contraste pour perturber la perception",
@@ -151,7 +151,7 @@ export const PAIRS = [
     },
     application: {
       label: "Tour Eiffel",
-      image: "/images/cards/application/eiffel.jpg",
+      image: "/images/cards/application/Tour effeil.jpeg",
     },
     explication: "L'os humain ne place la matière que là où la résistance est nécessaire. Gustave Eiffel s'est directement inspiré du fémur humain pour concevoir sa tour — légère, optimisée, avec la matière concentrée là où les contraintes s'exercent.",
     lien: "Optimisation structurelle — matière placée là où les forces s'exercent",
@@ -163,11 +163,11 @@ export const PAIRS = [
     id: 11,
     nature: {
       label: "Orchidée",
-      image: "/images/cards/vivant/orchidee.jpg",
+      image: "/images/cards/vivant/orchidee.png",
     },
     application: {
       label: "Gardens by the Bay",
-      image: "/images/cards/application/gardens.jpg",
+      image: "/images/cards/application/Gardens by the bay.jpeg",
     },
     explication: "Le plan directeur de Gardens by the Bay à Singapour s'inspire de la forme de l'orchidée pour créer un réseau harmonieux de structures architecturales et de technologies environnementales intégrées dans un tout organique.",
     lien: "Morphologie florale transposée à l'échelle architecturale",
@@ -193,10 +193,6 @@ export const XP_RULES = [
   { xp: 10,  label: "Enfin trouvé !",           color: "var(--brown-light)", bg: "#F5EEE6" },
 ];
 
-export const FAIL_MSGS = [
-  { label: "Mauvais choix ! −40 XP", penalty: 40, sub: "Vous perdez des points",  color: "#8A3A2A", bg: "#F5E0DC" },
-  { label: "Mauvais choix ! −30 XP", penalty: 30, sub: "Vous perdez des points",  color: "#7A4A2A", bg: "#F5EAD8" },
-  { label: "Mauvais choix ! −30 XP", penalty: 30, sub: "Ne te décourage pas !",   color: "#5A5A2A", bg: "#F5F5D8" },
-];
+
 
 export const TIMER_TOTAL = 30;

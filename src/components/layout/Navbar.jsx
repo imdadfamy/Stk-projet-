@@ -18,9 +18,9 @@ export default function Navbar() {
         {/* Links */}
         <ul className="navbar-links">
           <li><NavLink to="/"      className={({isActive})=>isActive?"nav-link active":"nav-link"}>Accueil</NavLink></li>
-          <li><NavLink to="/agence"      className={({isActive})=>isActive?"nav-link active":"nav-link"}>L'AGENCE</NavLink></li>
-          <li><NavLink to="/engagement"  className={({isActive})=>isActive?"nav-link active":"nav-link"}>ENGAGEMENTS</NavLink></li>
-          <li><NavLink to="/contact"     className={({isActive})=>isActive?"nav-link active":"nav-link"}>CONTACT</NavLink></li>
+        
+          <li><NavLink to="/engagement"  className={({isActive})=>isActive?"nav-link active":"nav-link"}>Notice du Jeu </NavLink></li>
+
         </ul>
 
         {/* Rank badge */}

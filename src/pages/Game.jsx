@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGameContext } from "../context/GameContext";
-import { ALL_APPLICATIONS, XP_RULES, FAIL_MSGS, TIMER_TOTAL } from "../data/pairs";
+import { ALL_APPLICATIONS, XP_RULES, TIMER_TOTAL } from "../data/pairs";
 import "./Game.css";
 
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
@@ -11,8 +11,8 @@ function getWrong(correct, all) {
 
 function FloatingXP({ value, id }) {
   return (
-    <div key={id} className="floating-xp" style={{ color: value > 0 ? "var(--rank-tree)" : "#C04A2A" }}>
-      {value > 0 ? `+${value}` : value} XP
+    <div key={id} className="floating-xp" style={{ color: "var(--rank-tree)" }}>
+      +{value} XP
     </div>
   );
 }
@@ -36,50 +36,56 @@ function TimerCircle({ timeLeft }) {
 
 export default function Game() {
   const navigate = useNavigate();
-  const { pairsOrder, challengeMode, addXP, rank, nextRank, gameStarted, totalXP } = useGameContext();
+  const { pairsOrder, challengeMode, addXP, rank, nextRank, gameStarted, totalXP, resetGame } = useGameContext();
 
-  const [idx, setIdx]               = useState(0);
-  const [choices, setChoices]       = useState([]);
-  const [attempts, setAttempts]     = useState(0);
-  const [wrongCards, setWrongCards] = useState([]);
-  const [banner, setBanner]         = useState(null);
-  const [revealed, setRevealed]     = useState(false);
+  const [idx, setIdx]                 = useState(0);
+  const [choices, setChoices]         = useState([]);
+  const [attempts, setAttempts]       = useState(0);
+  const [wrongCards, setWrongCards]   = useState([]);
+  const [banner, setBanner]           = useState(null);
+  const [revealed, setRevealed]       = useState(false);
   const [successCard, setSuccessCard] = useState(null);
   const [pressedCard, setPressedCard] = useState(null);
-  const [xpPop, setXpPop]           = useState(null);
-  const [xpPopKey, setXpPopKey]     = useState(0);
-  const [timeLeft, setTimeLeft]     = useState(TIMER_TOTAL);
-  const [timerOn, setTimerOn]       = useState(false);
-  const [screen, setScreen]         = useState("game"); // game | end
+  const [xpPop, setXpPop]             = useState(null);
+  const [xpPopKey, setXpPopKey]       = useState(0);
+  const [timeLeft, setTimeLeft]       = useState(TIMER_TOTAL);
+  const [timerOn, setTimerOn]         = useState(false);
+  const [screen, setScreen]           = useState("game");
   const timerRef = useRef(null);
 
   const pair = pairsOrder[idx];
 
-  // Redirect if game not started
+  // Redirect si jeu pas démarré
   useEffect(() => {
     if (!gameStarted) navigate("/engagement");
   }, [gameStarted]);
 
-  // Setup new card
+  // Setup nouvelle carte
   const setupCard = useCallback(() => {
     if (!pair) return;
     setChoices(shuffle([pair.application, ...getWrong(pair.application, ALL_APPLICATIONS)]));
-    setAttempts(0); setWrongCards([]); setBanner(null);
-    setRevealed(false); setSuccessCard(null); setPressedCard(null);
+    setAttempts(0);
+    setWrongCards([]);
+    setBanner(null);
+    setRevealed(false);
+    setSuccessCard(null);
+    setPressedCard(null);
     setTimeLeft(TIMER_TOTAL);
     if (challengeMode) setTimerOn(true);
+    else setTimerOn(false);
   }, [idx, pair, challengeMode]);
 
   useEffect(() => { setupCard(); }, [idx]);
 
-  // Timer
+  // Timer — uniquement en mode défi
   useEffect(() => {
     if (!timerOn || !challengeMode) return;
     if (timeLeft <= 0) {
       setTimerOn(false);
-      addXP(-40);
-      popXP(-40);
-      setBanner({ type: "fail", data: { label: "Temps écoulé ! −40 XP", sub: "Passe à la suite !", color: "#8A3A2A", bg: "#F5E0DC" } });
+      setBanner({
+        type: "fail",
+        data: { label: "Temps écoulé !", sub: "Passe à la suite !", color: "#8A3A2A", bg: "#F5E0DC" }
+      });
       setTimeout(() => { setRevealed(true); setBanner(null); }, 1300);
       return;
     }
@@ -88,19 +94,22 @@ export default function Game() {
   }, [timeLeft, timerOn, challengeMode]);
 
   function popXP(val) {
-    setXpPop(val); setXpPopKey(k => k + 1);
+    setXpPop(val);
+    setXpPopKey(k => k + 1);
     setTimeout(() => setXpPop(null), 1400);
   }
 
   function pick(choice) {
-    if (banner?.type === "success" || revealed || timeLeft <= 0) return;
+    if (banner?.type === "success" || revealed) return;
     if (wrongCards.includes(choice.label)) return;
 
     setPressedCard(choice.label);
     setTimeout(() => setPressedCard(null), 300);
 
     if (choice.label === pair.application.label) {
-      clearTimeout(timerRef.current); setTimerOn(false);
+      // ── BONNE RÉPONSE ──
+      clearTimeout(timerRef.current);
+      setTimerOn(false);
       const rule = XP_RULES[Math.min(attempts, 3)];
       let bonus = 0;
       if (challengeMode && attempts === 0) {
@@ -112,14 +121,11 @@ export default function Game() {
       setSuccessCard(choice.label);
       setBanner({ type: "success", data: { ...rule, xp: gained, bonus } });
       setTimeout(() => { setRevealed(true); setBanner(null); }, 700);
+
     } else {
-      const fail = FAIL_MSGS[Math.min(attempts, 2)];
-      addXP(-fail.penalty);
-      popXP(-fail.penalty);
+      // ── MAUVAISE RÉPONSE — pas de perte de points ──
       setWrongCards(w => [...w, choice.label]);
-      setBanner({ type: "fail", data: fail });
       setAttempts(a => a + 1);
-      setTimeout(() => setBanner(null), 1600);
     }
   }
 
@@ -128,10 +134,14 @@ export default function Game() {
     else setScreen("end");
   }
 
-  const indice = attempts === 1 ? pair?.indice1 : attempts === 2 ? pair?.indice2 : attempts === 3 ? pair?.indice3 : null;
+  const indice =
+    attempts === 1 ? pair?.indice1 :
+    attempts === 2 ? pair?.indice2 :
+    attempts === 3 ? pair?.indice3 : null;
+
   const barPct = (idx / pairsOrder.length) * 100;
 
-  // ── END SCREEN ──
+  // ── ÉCRAN DE FIN ──
   if (screen === "end") {
     return (
       <div className="game-end" style={{ background: rank.bg }}>
@@ -143,19 +153,21 @@ export default function Game() {
           <div className="end-xp" style={{ color: rank.color }}>{totalXP} <span>XP</span></div>
           <p className="end-quote">"Concevoir juste, concevoir responsable."</p>
           <div className="end-buttons">
-            <button className="btn btn-dark" onClick={() => navigate("/")}>Rejouer</button>
+            <button className="btn btn-dark" onClick={() => { resetGame(); navigate("/"); }}>
+              Rejouer
+            </button>
           </div>
         </div>
       </div>
     );
   }
 
-  // ── GAME SCREEN ──
+  // ── ÉCRAN DE JEU ──
   return (
     <div className="game-page">
       {xpPop !== null && <FloatingXP value={xpPop} id={xpPopKey} />}
 
-      {/* Sub-header progress */}
+      {/* Barre de progression */}
       <div className="game-subheader">
         <div className="game-subheader-inner">
           <div className="game-progress-text">{idx + 1} / {pairsOrder.length} paires</div>
@@ -168,22 +180,35 @@ export default function Game() {
 
       <div className="game-inner page-wrapper">
 
-        {/* Banner */}
-        {banner && (
-          <div className="game-banner anim-fade-up" style={{ background: banner.data.bg, borderColor: `${banner.data.color}30` }}>
+        {/* Bannière succès uniquement */}
+        {banner?.type === "success" && (
+          <div className="game-banner anim-fade-up"
+            style={{ background: banner.data.bg, borderColor: `${banner.data.color}30` }}>
             <span style={{ color: banner.data.color, fontWeight: 700 }}>{banner.data.label}</span>
             <span style={{ color: banner.data.color, opacity: 0.75, fontSize: 12 }}>
-              {banner.type === "success" && banner.data.bonus > 0 ? `⚡ +${banner.data.bonus} XP rapidité !` : banner.data.sub}
+              {banner.data.bonus > 0 ? `⚡ +${banner.data.bonus} XP rapidité !` : `+${banner.data.xp} XP`}
             </span>
+          </div>
+        )}
+
+        {/* Bannière temps écoulé */}
+        {banner?.type === "fail" && (
+          <div className="game-banner anim-fade-up"
+            style={{ background: banner.data.bg, borderColor: `${banner.data.color}30` }}>
+            <span style={{ color: banner.data.color, fontWeight: 700 }}>{banner.data.label}</span>
+            <span style={{ color: banner.data.color, opacity: 0.75, fontSize: 12 }}>{banner.data.sub}</span>
           </div>
         )}
 
         <div className="game-layout">
 
-          {/* LEFT — Nature card */}
+          {/* GAUCHE — Carte vivant */}
           <div className="game-left">
             <span className="game-section-label">ÉLÉMENT DU VIVANT</span>
-            <div className={`nature-card ${successCard ? "success" : ""}`} style={successCard ? { borderColor: rank.color, boxShadow: `0 8px 32px ${rank.color}40` } : {}}>
+            <div
+              className={`nature-card ${successCard ? "success" : ""}`}
+              style={successCard ? { borderColor: rank.color, boxShadow: `0 8px 32px ${rank.color}40` } : {}}
+            >
               <div className="card-corners">
                 <span className="corner tl"/><span className="corner tr"/>
                 <span className="corner bl"/><span className="corner br"/>
@@ -199,7 +224,7 @@ export default function Game() {
               </div>
             </div>
 
-            {/* Indice */}
+            {/* Indice — apparaît après chaque erreur */}
             {indice && (
               <div className="indice-box anim-fade-up">
                 <span className="indice-icon">💡</span>
@@ -211,11 +236,13 @@ export default function Game() {
             )}
 
             {!revealed && attempts > 0 && attempts < 4 && (
-              <p className="attempts-left">{4 - attempts} tentative{4 - attempts > 1 ? "s" : ""} restante{4 - attempts > 1 ? "s" : ""}</p>
+              <p className="attempts-left">
+                {4 - attempts} tentative{4 - attempts > 1 ? "s" : ""} restante{4 - attempts > 1 ? "s" : ""}
+              </p>
             )}
           </div>
 
-          {/* RIGHT — Choices or explanation */}
+          {/* DROITE — Choix ou explication */}
           <div className="game-right">
             {!revealed ? (
               <>
@@ -267,7 +294,7 @@ export default function Game() {
                   </p>
                 )}
 
-                <button className="btn btn-dark" onClick={next} style={{ marginTop: "1.5rem" }}>
+                <button className="btn btn-dark" onClick={next} style={{ marginTop: "1.5rem", alignSelf: "flex-start" }}>
                   {idx < pairsOrder.length - 1 ? "Paire suivante →" : "Voir mes résultats"}
                 </button>
               </div>
