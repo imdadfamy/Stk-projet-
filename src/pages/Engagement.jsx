@@ -99,7 +99,7 @@ export default function Engagement() {
                 ["2ème coup",       "+60 XP",  "var(--mint-dark)"],
                 ["3ème coup",       "+30 XP",  "var(--brown)"],
                 ["4ème coup",       "+10 XP",  "var(--brown-light)"],
-                ["Chaque erreur",   "−30 à −40 XP", "#8A3A2A"],
+         
               ].map(([label, xp, color]) => (
                 <div key={label} className="xp-row">
                   <span className="xp-label">{label}</span>

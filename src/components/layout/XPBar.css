@@ -24,6 +24,7 @@
   align-items: center;
   gap: 0;
   flex: 1;
+  overflow: hidden;
 }
 
 .rank-step {
@@ -32,6 +33,7 @@
   gap: 6px;
   opacity: 0.4;
   transition: opacity var(--t-mid);
+  flex-shrink: 0;
 }
 .rank-step.unlocked { opacity: 1; }
 .rank-step.current .rank-step-icon {
@@ -62,6 +64,7 @@
   margin: 0 8px;
   border-radius: 2px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 .rank-step-fill {
   height: 100%;
@@ -75,6 +78,7 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 1px;
+  flex-shrink: 0;
 }
 .xpbar-label {
   font-family: var(--font-sans);
@@ -90,7 +94,7 @@
   letter-spacing: -0.02em;
 }
 
-/* Progress bar (top of xpbar) */
+/* Progress bar */
 .xpbar-progress {
   position: absolute;
   top: 0; left: 0; right: 0;
@@ -100,4 +104,29 @@
 .xpbar-progress-fill {
   height: 100%;
   transition: width 0.6s var(--ease-soft), background 0.5s;
+}
+
+/* ── Tablette ── */
+@media (max-width: 1024px) {
+  .xpbar-inner { padding: 0 1.5rem; gap: 1.5rem; }
+  .rank-step-line { width: 44px; margin: 0 6px; }
+}
+
+/* ── Mobile large ── */
+@media (max-width: 768px) {
+  .xpbar-inner { padding: 0 1rem; gap: 1rem; }
+  .rank-step-label { display: none; }
+  .rank-step-icon { font-size: 17px; }
+  .rank-step-line { width: 28px; margin: 0 4px; }
+  .xpbar-total { font-size: 18px; }
+  .xpbar-label { display: none; }
+  .rank-step { gap: 3px; }
+}
+
+/* ── Mobile petit ── */
+@media (max-width: 480px) {
+  .xpbar-inner { padding: 0 0.75rem; gap: 0.5rem; }
+  .rank-step-icon { font-size: 15px; }
+  .rank-step-line { width: 18px; margin: 0 3px; }
+  .xpbar-total { font-size: 16px; }
 }

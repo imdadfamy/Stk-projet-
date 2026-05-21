@@ -19,12 +19,13 @@ body {
   min-height: 100vh;
 }
 
-/* Content zone — entre navbar et XP bar */
+/* Content zone */
 .app-content {
   flex: 1;
   padding-top: var(--nav-h);
   padding-bottom: var(--xpbar-h);
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* Page container centré */
@@ -73,6 +74,23 @@ body {
   50%       { box-shadow: 0 0 20px 4px var(--mint-light); }
 }
 
-.anim-fade-up   { animation: fadeUp var(--t-mid) var(--ease-soft) both; }
-.anim-fade-in   { animation: fadeIn var(--t-mid) var(--ease-soft) both; }
-.anim-sprout    { animation: sprout 0.8s var(--ease-soft) both; }
+.anim-fade-up { animation: fadeUp var(--t-mid) var(--ease-soft) both; }
+.anim-fade-in { animation: fadeIn var(--t-mid) var(--ease-soft) both; }
+.anim-sprout  { animation: sprout 0.8s var(--ease-soft) both; }
+
+/* ── Responsive ── */
+
+/* Tablette */
+@media (max-width: 1024px) {
+  .page-wrapper { padding: 0 1.5rem; }
+}
+
+/* Mobile large */
+@media (max-width: 768px) {
+  .page-wrapper { padding: 0 1rem; }
+}
+
+/* Mobile petit */
+@media (max-width: 480px) {
+  .page-wrapper { padding: 0 0.75rem; }
+}
