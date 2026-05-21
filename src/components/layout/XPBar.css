@@ -1,0 +1,103 @@
+.xpbar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: var(--xpbar-h);
+  background: var(--beige);
+  border-top: 1px solid var(--beige-dark);
+  z-index: 100;
+}
+
+.xpbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  gap: 2rem;
+}
+
+/* Ranks row */
+.xpbar-ranks {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+}
+
+.rank-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.4;
+  transition: opacity var(--t-mid);
+}
+.rank-step.unlocked { opacity: 1; }
+.rank-step.current .rank-step-icon {
+  transform: scale(1.25);
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+.rank-step-icon {
+  font-size: 20px;
+  transition: transform var(--t-mid), filter var(--t-mid);
+}
+
+.rank-step-label {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--grey-mid);
+  white-space: nowrap;
+}
+.rank-step.unlocked .rank-step-label { color: var(--ink); }
+
+/* Line between steps */
+.rank-step-line {
+  width: 60px;
+  height: 2px;
+  background: var(--beige-dark);
+  margin: 0 8px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.rank-step-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.6s var(--ease-soft);
+}
+
+/* Score */
+.xpbar-score {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+.xpbar-label {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--grey-mid);
+}
+.xpbar-total {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+/* Progress bar (top of xpbar) */
+.xpbar-progress {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--beige-dark);
+}
+.xpbar-progress-fill {
+  height: 100%;
+  transition: width 0.6s var(--ease-soft), background 0.5s;
+}

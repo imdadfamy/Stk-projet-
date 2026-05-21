@@ -1,0 +1,50 @@
+:root {
+  /* ── Palette STK ── */
+  --mint:        #7BAF9E;
+  --mint-light:  #B8D8CF;
+  --mint-dark:   #4A8073;
+  --mint-pale:   #EAF3F0;
+
+  --beige:       #F2EDE4;
+  --beige-dark:  #E0D5C5;
+  --beige-deeper:#C8B99A;
+
+  --brown:       #7A5C3E;
+  --brown-light: #A8845E;
+  --brown-dark:  #4A3325;
+  --brown-pale:  #F0E8DF;
+
+  --ink:         #1C1C1A;
+  --white:       #FFFFFF;
+  --grey-light:  #F5F5F2;
+  --grey-mid:    #9A9A90;
+
+  /* ── Rangs ── */
+  --rank-seed:   #A8845E;
+  --rank-sprout: #7BAF9E;
+  --rank-tree:   #4A8073;
+  --rank-forest: #2A5A4A;
+
+  /* ── Typographie ── */
+  --font-serif:  'Georgia', 'Times New Roman', serif;
+  --font-sans:   'DM Sans', 'Inter', sans-serif;
+
+  /* ── Espacements ── */
+  --nav-h:       72px;
+  --xpbar-h:     64px;
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   24px;
+  --radius-pill: 100px;
+
+  /* ── Ombres ── */
+  --shadow-sm:   0 2px 8px rgba(28,28,26,0.08);
+  --shadow-md:   0 6px 24px rgba(28,28,26,0.12);
+  --shadow-lg:   0 16px 48px rgba(28,28,26,0.16);
+
+  /* ── Transitions ── */
+  --ease-soft:   cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast:      0.18s;
+  --t-mid:       0.35s;
+  --t-slow:      0.55s;
+}
