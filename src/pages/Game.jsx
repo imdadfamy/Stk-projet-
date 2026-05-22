@@ -36,9 +36,10 @@ function TimerCircle({ timeLeft }) {
 
 export default function Game() {
   const navigate = useNavigate();
-  const { pairsOrder, challengeMode, addXP, rank, nextRank, gameStarted, totalXP, resetGame } = useGameContext();
+ const { pairsOrder, challengeMode, addXP, rank, nextRank, gameStarted, totalXP, resetGame, currentIdx, setCurrentIdx } = useGameContext();
 
-  const [idx, setIdx]                 = useState(0);
+ 
+  const [idx, setIdx] = useState(currentIdx);
   const [choices, setChoices]         = useState([]);
   const [attempts, setAttempts]       = useState(0);
   const [wrongCards, setWrongCards]   = useState([]);
@@ -115,7 +116,7 @@ export default function Game() {
       if (challengeMode && attempts === 0) {
         bonus = timeLeft >= 20 ? 30 : timeLeft >= 12 ? 15 : 0;
       }
-      const gained = rule.xp + bonus;
+      const gained = rule.xp ;
       addXP(gained);
       popXP(gained);
       setSuccessCard(choice.label);
@@ -129,11 +130,16 @@ export default function Game() {
     }
   }
 
-  function next() {
-    if (idx < pairsOrder.length - 1) setIdx(i => i + 1);
-    else setScreen("end");
+ function next() {
+  if (idx < pairsOrder.length - 1) {
+    const newIdx = idx + 1;
+    setIdx(newIdx);
+    setCurrentIdx(newIdx);
+  } else {
+    setCurrentIdx(0);
+    setScreen("end");
   }
-
+}
   const indice =
     attempts === 1 ? pair?.indice1 :
     attempts === 2 ? pair?.indice2 :

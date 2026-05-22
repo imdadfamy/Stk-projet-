@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useGameContext } from "../context/GameContext";
 import "./Engagement.css";
 
 const BIOME_EXAMPLES = [
@@ -9,6 +10,7 @@ const BIOME_EXAMPLES = [
 
 export default function Engagement() {
   const navigate = useNavigate();
+  const { gameStarted } = useGameContext();
 
   return (
     <div className="engagement-page">
@@ -130,12 +132,14 @@ export default function Engagement() {
         </section>
 
         {/* ── CTA ── */}
-        <div className="eng-cta anim-fade-up">
-          <p>Prêt à explorer les liens entre le vivant et l'architecture ?</p>
-          <button className="btn btn-dark btn-lg" onClick={() => navigate("/jeu")}>
-            Commencer le jeu →
-          </button>
-        </div>
+{gameStarted && (
+  <div className="eng-cta">
+    <p>Prêt à explorer les liens entre le vivant et l'architecture ?</p>
+    <button className="btn btn-dark btn-lg" onClick={() => navigate("/jeu")}>
+      Commencer le jeu →
+    </button>
+  </div>
+)}
 
       </div>
     </div>

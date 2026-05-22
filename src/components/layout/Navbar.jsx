@@ -10,10 +10,9 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="navbar-inner">
         {/* Logo */}
-        <NavLink to="/" className="navbar-logo">
-          <span className="logo-stk">STK</span>
-          <span className="logo-sub">ARCHITECTURE</span>
-        </NavLink>
+      <NavLink to="/" className="navbar-logo">
+  <img src="/images/STK Architecture - fond transparent.png" alt="STK Architecture" className="logo-img" />
+</NavLink>
 
         {/* Links */}
         <ul className="navbar-links">

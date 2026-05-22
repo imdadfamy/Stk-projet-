@@ -18,6 +18,7 @@ export default function Home() {
         {/* Left column */}
         <div className="home-left anim-fade-up">
           <span className="home-tag">BIOMIMÉTISME & INNOVATION</span>
+          <div className="home-game-title">SEED TO FOREST</div>
 
           <h1 className="home-title">
             <em>Le vivant</em><br />

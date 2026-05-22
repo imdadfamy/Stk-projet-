@@ -42,6 +42,13 @@
   color: var(--grey-mid);
 }
 
+.logo-img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0);
+}
+
 /* Links */
 .navbar-links {
   display: flex;

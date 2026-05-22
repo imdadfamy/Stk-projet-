@@ -55,7 +55,7 @@ export const PAIRS = [
     },
     application: {
       label: "Ciment neutre en carbone",
-      image: "/images/cards/application/ciment.jpg",
+      image: "/images/cards/application/ciment.jpeg",
     },
     explication: "Les polypes de corail absorbent le CO₂ et les minéraux de l'eau de mer pour sécréter du carbonate de calcium. Ce processus inspire une production de ciment qui capture le CO₂ plutôt que d'en émettre.",
     lien: "Minéralisation du CO₂ pour produire un matériau de construction",
